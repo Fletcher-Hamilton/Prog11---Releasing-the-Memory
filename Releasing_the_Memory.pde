@@ -1,11 +1,20 @@
 // Fletcher Hamilton
-PImage rabbitImg, windowImg;
+PImage rabbitImg, windowImg, barnDoorImg;
+float EarthDiameter, EarthRadius, pixelsInMetre;
 
 void setup() {
   size(1500, 1000);
+  
+  // Actual diameter of Earth
+  EarthDiameter = 12756.27;
+  EarthRadius = EarthDiameter/2;
+  
+  pixelsInMetre = 3779.53;
+  
   // Load sprites
-  rabbitImg = loadImage("rabbit.png");
-  windowImg = loadImage("window.png");
+  rabbitImg   = loadImage("rabbit.png");
+  windowImg   = loadImage("window.png");
+  barnDoorImg = loadImage("barnDoor.png");
 }
 
 void draw() {
@@ -33,15 +42,21 @@ void draw() {
 
   // Barn door
   noStroke();
-  //rect();
-  //rect();
+  image(barnDoorImg, 150, 500, 300, 300);
+  
+  // Grass
+  fill(#009A17);
+  circle(width/2, height+EarthRadius*pixelsInMetre-200, EarthDiameter*pixelsInMetre);
   
   
   stroke(0);
   for (int i = 50; i < width; i += 50) {
-    if (ifDivisible()) {
-      
+    if (i % 100 == 0) {
+      strokeWeight(2);
+    } else {
+      strokeWeight(1);
     }
+    line(0, i, width, i);
+    line(i, 0, i, height);
   }
-  
 }
