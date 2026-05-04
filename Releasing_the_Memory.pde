@@ -1,8 +1,15 @@
 // Fletcher Hamilton
+
+int y, z;
 PImage rabbitImg, windowImg, barnDoorImg, fenceImg;
 float EarthDiameter, EarthRadius, pixelsInMetre;
+boolean up, upZ;
 
 void setup() {
+  y = 700;
+  z = 600;
+  up = true;
+
   size(1500, 1000);
 
   // Actual diameter of Earth
@@ -19,6 +26,17 @@ void setup() {
 }
 
 void draw() {
+  if (y < 600) up = false;
+  else if (y > 700) up = true;
+
+  if (up == true) {
+    y -= 3;
+    z += 4;
+  } else {
+    y -= 3;
+    z += 4;
+  }
+
   background(#82C8E5); // sky blue
 
   // Barn
@@ -49,18 +67,22 @@ void draw() {
   fill(#009A17);
   circle(width/2, height+EarthRadius*pixelsInMetre-200, EarthDiameter*pixelsInMetre);
 
+  // Rabbit
+  rabbit(800, y);
+  rabbit(1000, z);
+
   // Fence
   for (int i = 700; i < width; i += 143) image(fenceImg, i, 700, 143, 100);
 
-  // Rabbit
   stroke(0);
   for (int i = 50; i < width; i += 50) {
-    if (i % 100 == 0) {
-      strokeWeight(2);
-    } else {
-      strokeWeight(1);
-    }
+    if (i % 100 == 0) strokeWeight(2);
+    else strokeWeight(1);
     line(0, i, width, i);
     line(i, 0, i, height);
   }
+}
+
+void rabbit(int x, int y) {
+  image(rabbitImg, x, y, 73.5431731, 100);
 }
