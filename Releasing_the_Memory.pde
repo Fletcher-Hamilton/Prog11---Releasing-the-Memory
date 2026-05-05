@@ -1,6 +1,6 @@
 // Fletcher Hamilton
 
-int a, b, y, z;
+int a, b, c, x, y, z;
 PImage rabbitImg, windowImg, barnDoorImg, fenceImg;
 float EarthDiameter, EarthRadius, pixelsInMetre;
 boolean up, g;
@@ -10,7 +10,9 @@ void setup() {
   // Starting positions for rabbits
   a = 800;
   b = 1000;
+  c = 1200;
   
+  x = 700;
   y = 700;
   z = 625;
   up = true;
@@ -37,9 +39,11 @@ void draw() {
   else if (y > 700) up = true;
 
   if (up == true) {
+    x -= 1;
     y -= 3;
     z += 2;
   } else {
+    x += 1;
     y += 3;
     z -= 2;
   }
@@ -73,11 +77,16 @@ void draw() {
   // Grass
   fill(#009A17);
   circle(width/2, height+EarthRadius*pixelsInMetre-200, EarthDiameter*pixelsInMetre);
+  
+  // Sun
+  fill(255, 255, 0);
+  circle(1300, 150, 150);
 
-  // Rabbit
-  rabbit(a, y);
-  rabbit(1000, z);
-
+  // Rabbits
+  a = rabbit(a, x);
+  b = rabbit(b, y);
+  c = rabbit(c, z);
+  
   // Fence
   for (int i = 700; i < width; i += 143) image(fenceImg, i, 700, 143, 100);
 
@@ -92,8 +101,13 @@ void draw() {
   }
 }
 
-void rabbit(int x, int y) {
+int rabbit(int x, int y) {
   image(rabbitImg, x, y, 73.5431731, 100);
+  
+  // Rabbit Logic
+  if (mouseX-3 > x && x < width-75) x += 4;
+  else if (mouseX+3 < x && x > 700) x -= 4;
+  return x;
 }
 
 void keyPressed() {
